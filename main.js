@@ -160,5 +160,5 @@ function fetchWeather(city) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  fetchWeather("Lagos");
+  fetchWeather("Kano");
 });
