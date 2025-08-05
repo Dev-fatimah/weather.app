@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./src/output.css" />
+  </head>
+  <body class="min-h-screen">
+    <div class="bg-gray-600 container mx-auto px-4 py-8">
+      <!-- header -->
+      <div class="text-center mb-8">
+        <h1 class="text-4xl text-white mb-2 font-bold">🌤️ Nigeria Weather</h1>
+        <p class="text-white/80 text-lg">
+          Get real-time weather for any Nigerian state
+        </p>
+      </div>
+      <!-- Search section -->
+      <div class="max-w-md mx-auto mb-8">
+        <div class="relative">
+          <input
+            type="text"
+            id="cityInput"
+            placeholder="Enter Nigerian state (e.g., Lagos, Abuja, Kano)"
+            class="text-lg text-gray-800 px-6 py-5 rounded-full focus:outline-none focus:ring-white/10 shadow-lg w-md bg-white"
+          />
+          <button
+            onclick="getWeather()" onclick="formatDate()" id="searchBtn"
+            class="rounded-full text-white px-6 py-2 absolute bg-blue-500 hover:bg-blue-600 transition-colors duration-300 shadow-lg right-2 top-3" 
+          >
+            Search
+          </button>
+        </div>
+      </div>
+      <!-- Loading Spinner -->
+      <div id="loading" class="text-center mb-8 hidden">
+        <div
+          class="inline-block w-8 h-8 border-4 border-white/30 bordre-t-white rounded-full"
+        ></div>
+        <p class="text-white mt-2 text-lg">Loading weather data...</p>
+      </div>
+      <!-- Error message -->
+      <div id="error" class="max-w-md mx-auto mb-8 hidden">
+        <div
+          class="bg-red-500/20 border border-red-500/50 text-white px-6 py-4 rounded-lg backdrop-blur-sm"
+        >
+          <p id="errorMsg" class="text-sm text-white">
+            Something went wrong. Please try again. Please enter a city name
+          </p>
+        </div>
+      </div>
+      <!-- weather display -->
+      <div id="weatherDisplay" class="max-w-2xl mx-auto">
+        <div
+          class="weather-card bg-white/10 backdrop-blur-md rounded-3xl p-8 shadow-2xl border border-white/20"
+        >
+          <!-- City name -->
+          <div class="text-center mb-6">
+            <h2 id="cityName" class="text-3xl text-white font-bold mb-2">
+              Lagos
+            </h2>
+            <p id="currentDate" class="text-white/70">Friday, July 25th 2025</p>
+          </div>
+          <!-- Main weather info -->
+          <div
+            class="flex flex-col md:flex-row items-center justify-between mb-8"
+          >
+            <!-- weather icon -->
+            <div class="mb-4">
+              <div id="weatherIcon" class="text-8xl">🌤️</div>
+            </div>
+            <!-- Temperature -->
+            <div class="text-center">
+              <div id="temperature" class="text-6xl font-bold text-white mb-2">
+                24°C
+              </div>
+              <div id="description" class="text-xl text-white/80 capitalize">
+                overcast clouds
+              </div>
+            </div>
+          </div>
+          <!-- weather details grid -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <!-- individual grid -->
+            <div
+              class="bg-white/10 rounded-xl p-4 text-center backdrop-blur-sm"
+            >
+              <div id="windSpeedIcon" class="text-2xl mb-2">💨</div>
+              <div class="text-white/80 text-sm">Wind Speed</div>
+              <div id="windSpeed" class="text-white font-semibold">
+                3.06 m/s
+              </div>
+            </div>
+            <!-- individual grid -->
+            <div
+              class="bg-white/10 rounded-xl p-4 text-center backdrop-blur-sm"
+            >
+              <div class="text-2xl mb-2">💧</div>
+              <div class="text-white/80 text-sm">Humidity</div>
+              <div id="humidity" class="text-white font-semibold">81%</div>
+            </div>
+            <!-- individual grid -->
+            <div
+              class="bg-white/10 rounded-xl p-4 text-center backdrop-blur-sm"
+            >
+              <div class="text-2xl mb-2">👁️</div>
+              <div class="text-white/80 text-sm">Visibility</div>
+              <div id="visibility" class="text-white font-semibold">10.0 km</div>
+            </div>
+            <!-- individual grid -->
+            <div
+              class="bg-white/10 rounded-xl p-4 text-center backdrop-blur-sm"
+            >
+              <div class="text-2xl mb-2">🌡️</div>
+              <div class="text-white/80 text-sm">Feels Like</div>
+              <div id="feelsLike" class="text-white font-semibold">25°C</div>
+            </div>
+          </div>
+          <!-- Popular Nigerian cities -->
+          <div class="max-w-4xl mx-auto mt-12">
+            <h3 class="text-2xl font-semibold text-white text-center mb-5">
+              Popular Nigerian States
+            </h3>
+            <!-- Popular state buttons -->
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+              <button onclick="fetchWeather()"
+                class="city-btn bg-white/10 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors duration-300 backdrop-blur-sm"
+              >
+                Lagos
+              </button>
+              <button onclick="fetchWeather()"
+                class="city-btn bg-white/10 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors duration-300 backdrop-blur-sm"
+              >
+                Abuja
+              </button>
+              <button onclick="fetchWeather()"
+                class="city-btn bg-white/10 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors duration-300 backdrop-blur-sm"
+              >
+                Kano
+              </button>
+              <button onclick="fetchWeather()"
+                class="city-btn bg-white/10 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors duration-300 backdrop-blur-sm"
+              >
+                Port Harcourt
+              </button>
+              <button onclick="fetchWeather()"
+                class="city-btn bg-white/10 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors duration-300 backdrop-blur-sm"
+              >
+                Ibadan
+              </button>
+              <button onclick="fetchWeather()"
+                class="city-btn bg-white/10 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors duration-300 backdrop-blur-sm"
+              >
+                Enugu
+              </button>
+              <button onclick="fetchWeather()"
+                class="city-btn bg-white/10 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors duration-300 backdrop-blur-sm"
+              >
+                Kaduna
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./main.js"></script>
+  </body>
+</html>
